@@ -311,10 +311,11 @@ class TrackIndex(object):
       self.num    = int(num)
       self.time   = _TrackTime(time)
       # set length to maximum possible for now (total - start)
-      file_len = self._file_len(self.file_)
-      if file_len: self.len_ = file_len - self.time
-      else:        self.len_ = ''
-      log.debug( 'creating index %s' % repr(self) )
+      self.len_ = ''
+      if os.path.splitext(self.file_)[1].lower() == '.wav':
+         file_len = self._file_len(self.file_)
+         if file_len: self.len_ = file_len - self.time
+         log.debug( 'creating index %s' % repr(self) )
 
    def __repr__(self):
       """Return a string used for debug logging."""
